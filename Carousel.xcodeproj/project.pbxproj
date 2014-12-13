@@ -14,6 +14,7 @@
 		5808C5421A372C96001CB0DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5808C5411A372C96001CB0DD /* Images.xcassets */; };
 		5808C5451A372C96001CB0DD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5808C5431A372C96001CB0DD /* LaunchScreen.xib */; };
 		5808C5511A372C96001CB0DD /* CarouselTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5808C5501A372C96001CB0DD /* CarouselTests.m */; };
+		5808C55C1A372CB2001CB0DD /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5808C55B1A372CB2001CB0DD /* Carousel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		5808C54A1A372C96001CB0DD /* CarouselTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarouselTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5808C54F1A372C96001CB0DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5808C5501A372C96001CB0DD /* CarouselTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarouselTests.m; sourceTree = "<group>"; };
+		5808C55A1A372CB2001CB0DD /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
+		5808C55B1A372CB2001CB0DD /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +92,8 @@
 				5808C5411A372C96001CB0DD /* Images.xcassets */,
 				5808C5431A372C96001CB0DD /* LaunchScreen.xib */,
 				5808C5341A372C96001CB0DD /* Supporting Files */,
+				5808C55A1A372CB2001CB0DD /* Carousel.h */,
+				5808C55B1A372CB2001CB0DD /* Carousel.m */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				5808C53D1A372C96001CB0DD /* ViewController.m in Sources */,
 				5808C53A1A372C96001CB0DD /* AppDelegate.m in Sources */,
 				5808C5371A372C96001CB0DD /* main.m in Sources */,
+				5808C55C1A372CB2001CB0DD /* Carousel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
