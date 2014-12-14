@@ -14,6 +14,6 @@
 @end
 
 
-@interface Carousel : UIScrollView <UIScrollViewDelegate>
+@interface Carousel : UIView
 @property (weak) id<CarouselDatasource> dataSource;
 @end
