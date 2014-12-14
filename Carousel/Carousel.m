@@ -7,12 +7,14 @@
 //
 
 #import "Carousel.h"
+#define SUBVIEW_SIZE   100
 
 @implementation Carousel
 {
     NSMutableArray *subviews;
     CGPoint panDistance;
 }
+
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -23,9 +25,10 @@
         
         [self insertView: [self createView] ];
         [self insertView: [self createView] ];
-        [self insertView: [self createView] ];
-        
-        
+//        [self insertView: [self createView] ];
+//        [self insertView: [self createView] ];
+//        [self insertView: [self createView] ];
+//        [self insertView: [self createView] ];
         
         UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panned:)];
         [self addGestureRecognizer:panRec];
@@ -48,7 +51,7 @@
         c = [UIColor colorWithHue:hue+0.1 saturation:1 brightness:1 alpha:1];
     }
     
-    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    UIView *v = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SUBVIEW_SIZE, SUBVIEW_SIZE)];
     [v setBackgroundColor:c];
     return v;
 }
@@ -61,7 +64,7 @@
 
 -(void)layoutSubviews
 {
-    for ( int i=0; i< subviews.count; i++) {
+    for ( int i=0; i<subviews.count; i++) {
         UIView* view = subviews[i];
         view.layer.transform = [self transformForViewAtIndex:i];;
     }
@@ -75,36 +78,37 @@
 -(CATransform3D)transformForViewAtIndex:(NSUInteger)index
 {
     CATransform3D transform = CATransform3DIdentity;
-    transform.m34 = 2.5 / 1000;
-    transform = CATransform3DTranslate(transform, [self baseXtranslation] + [self initialXtranslation:index], 50, [self baseZtranslation] + /*500 - 50*index*/ [self initialZtranslation:index]);
+    transform.m34 = -2.5 / 1000;
+    transform = CATransform3DTranslate(transform,
+                                       /*[self panXtranslation:index] +*/ /*50 * index*/[self initialXtranslation:index],
+                                       CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2 ,
+                                       /*[self panZtranslation:index] +*/ /*500 - 50*index)*/ [self initialZtranslation:index]
+                                       );
     return transform;
 }
 
 -(float)initialXtranslation:(NSUInteger)index
 {
-    return CGRectGetWidth([UIScreen mainScreen].bounds) / 2 + 50 * index;
+    float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
+    return screenW / 2 + sinf(2*M_PI / [self count] * index + 2*M_PI*panDistance.x/screenW*2) * screenW/2 - SUBVIEW_SIZE/2 + 1 * index;
 }
 
 -(float)initialZtranslation:(NSUInteger)index
 {
-    return CGRectGetWidth([UIScreen mainScreen].bounds) / 2 + 50 * index;
+    float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
+    return sin(2*M_PI / [self count] * index + 2*M_PI*panDistance.x/screenW) * screenW/2;
 }
 
--(float)baseXtranslation
+-(float)panXtranslation:(NSUInteger)index
 {
-//    bool isPortrait = UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation);
     int screenW = CGRectGetWidth( [UIScreen mainScreen].bounds );
-//    int screenH = CGRectGetHeight( [UIScreen mainScreen].bounds );
-
-    return sinf(2*M_PI*(int)panDistance.x/screenW*2) * screenW;
+    return sinf(2*M_PI*panDistance.x/screenW*2) * screenW;
 }
 
--(float)baseZtranslation
+-(float)panZtranslation:(NSUInteger)index
 {
     int screenW = CGRectGetWidth( [UIScreen mainScreen].bounds );
-//    int screenH = CGRectGetHeight( [UIScreen mainScreen].bounds );
-
-    return -cosf(2*M_PI*(int)panDistance.x/screenW*2) * screenW/10;
+    return sin(2*M_PI*panDistance.x/screenW) * screenW/5;
 }
 
 -(void)panned:(UIPanGestureRecognizer*)pan
@@ -114,6 +118,7 @@
     {
         
     }
+    
     if(pan.state == UIGestureRecognizerStateChanged)
     {
         [self layoutSubviews];
@@ -121,11 +126,11 @@
         NSLog(@"%f %f", panDistance.x, panDistance.y);
         [self layoutSubviews];
     }
+    
     if(pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled)
     {
         
     }
-    
 }
 
 @end
