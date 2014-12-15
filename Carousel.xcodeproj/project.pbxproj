@@ -13,19 +13,8 @@
 		5808C5401A372C96001CB0DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5808C53E1A372C96001CB0DD /* Main.storyboard */; };
 		5808C5421A372C96001CB0DD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5808C5411A372C96001CB0DD /* Images.xcassets */; };
 		5808C5451A372C96001CB0DD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5808C5431A372C96001CB0DD /* LaunchScreen.xib */; };
-		5808C5511A372C96001CB0DD /* CarouselTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5808C5501A372C96001CB0DD /* CarouselTests.m */; };
 		5808C55C1A372CB2001CB0DD /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5808C55B1A372CB2001CB0DD /* Carousel.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5808C54B1A372C96001CB0DD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5808C5291A372C96001CB0DD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5808C5301A372C96001CB0DD;
-			remoteInfo = Carousel;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5808C5311A372C96001CB0DD /* Carousel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carousel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,22 +27,12 @@
 		5808C53F1A372C96001CB0DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5808C5411A372C96001CB0DD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5808C5441A372C96001CB0DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		5808C54A1A372C96001CB0DD /* CarouselTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarouselTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5808C54F1A372C96001CB0DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5808C5501A372C96001CB0DD /* CarouselTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarouselTests.m; sourceTree = "<group>"; };
 		5808C55A1A372CB2001CB0DD /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		5808C55B1A372CB2001CB0DD /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5808C52E1A372C96001CB0DD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5808C5471A372C96001CB0DD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -67,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				5808C5331A372C96001CB0DD /* Carousel */,
-				5808C54D1A372C96001CB0DD /* CarouselTests */,
 				5808C5321A372C96001CB0DD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				5808C5311A372C96001CB0DD /* Carousel.app */,
-				5808C54A1A372C96001CB0DD /* CarouselTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,23 +84,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5808C54D1A372C96001CB0DD /* CarouselTests */ = {
-			isa = PBXGroup;
-			children = (
-				5808C5501A372C96001CB0DD /* CarouselTests.m */,
-				5808C54E1A372C96001CB0DD /* Supporting Files */,
-			);
-			path = CarouselTests;
-			sourceTree = "<group>";
-		};
-		5808C54E1A372C96001CB0DD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5808C54F1A372C96001CB0DD /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,24 +104,6 @@
 			productReference = 5808C5311A372C96001CB0DD /* Carousel.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5808C5491A372C96001CB0DD /* CarouselTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5808C5571A372C96001CB0DD /* Build configuration list for PBXNativeTarget "CarouselTests" */;
-			buildPhases = (
-				5808C5461A372C96001CB0DD /* Sources */,
-				5808C5471A372C96001CB0DD /* Frameworks */,
-				5808C5481A372C96001CB0DD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5808C54C1A372C96001CB0DD /* PBXTargetDependency */,
-			);
-			name = CarouselTests;
-			productName = CarouselTests;
-			productReference = 5808C54A1A372C96001CB0DD /* CarouselTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -173,10 +115,6 @@
 				TargetAttributes = {
 					5808C5301A372C96001CB0DD = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					5808C5491A372C96001CB0DD = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 5808C5301A372C96001CB0DD;
 					};
 				};
 			};
@@ -194,7 +132,6 @@
 			projectRoot = "";
 			targets = (
 				5808C5301A372C96001CB0DD /* Carousel */,
-				5808C5491A372C96001CB0DD /* CarouselTests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,13 +144,6 @@
 				5808C5401A372C96001CB0DD /* Main.storyboard in Resources */,
 				5808C5451A372C96001CB0DD /* LaunchScreen.xib in Resources */,
 				5808C5421A372C96001CB0DD /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5808C5481A372C96001CB0DD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,23 +161,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5808C5461A372C96001CB0DD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5808C5511A372C96001CB0DD /* CarouselTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5808C54C1A372C96001CB0DD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5808C5301A372C96001CB0DD /* Carousel */;
-			targetProxy = 5808C54B1A372C96001CB0DD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5808C53E1A372C96001CB0DD /* Main.storyboard */ = {
@@ -367,40 +281,6 @@
 			};
 			name = Release;
 		};
-		5808C5581A372C96001CB0DD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CarouselTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Carousel.app/Carousel";
-			};
-			name = Debug;
-		};
-		5808C5591A372C96001CB0DD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = CarouselTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Carousel.app/Carousel";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -418,15 +298,6 @@
 			buildConfigurations = (
 				5808C5551A372C96001CB0DD /* Debug */,
 				5808C5561A372C96001CB0DD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5808C5571A372C96001CB0DD /* Build configuration list for PBXNativeTarget "CarouselTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5808C5581A372C96001CB0DD /* Debug */,
-				5808C5591A372C96001CB0DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
