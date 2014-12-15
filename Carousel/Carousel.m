@@ -13,6 +13,8 @@
 {
     NSMutableArray *subviews;
     CGPoint panDistance;
+    NSTimer *fadeTimer;
+    NSUInteger fadeIteration;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -84,7 +86,7 @@
     transform.m34 = -2.5 / 1000;
     transform = CATransform3DTranslate(transform,
                                        [self xTranslation:index],
-                                       CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2 ,
+                                       CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2,
                                        [self zTranslation:index]
                                        );
     return transform;
@@ -116,26 +118,47 @@
     
     if(pan.state == UIGestureRecognizerStateBegan)
     {
-        panStart = [pan locationInView:self];
+        [self stopFading];
+        
+        panStart = panDistance;
     }
     
     if(pan.state == UIGestureRecognizerStateChanged)
     {
-        [self layoutSubviews];
-        CGPoint newDelta = CGPointMake([pan locationInView:self].x - panStart.x, [pan locationInView:self].y - panStart.y);
-        panDistance = newDelta;//CGPointMake(panDistance.x + newDelta.x, panDistance.y + newDelta.y);
-        /*[pan translationInView:self]*/
-        //CGPointMake(panDistance.x + [pan translationInView:self].x, panDistance.y + [pan translationInView:self].y);
-//        NSLog(@"%f %f", panDistance.x, panDistance.y);
+        panDistance = CGPointMake(panStart.x + [pan translationInView:self].x, panStart.y + [pan translationInView:self].y);
         [self layoutSubviews];
     }
     
     if(pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled)
     {
         CGPoint velocity = [pan velocityInView:self];
-        NSLog(@"%f",velocity.x);
         
+        fadeTimer = [NSTimer timerWithTimeInterval:0.05 target:self selector:@selector(panFade) userInfo:[NSValue valueWithCGPoint:velocity] repeats:YES];
+        [[NSRunLoop mainRunLoop]addTimer:fadeTimer forMode:NSRunLoopCommonModes];
     }
+}
+
+-(void)panFade
+{
+    CGPoint velocity = [fadeTimer.userInfo CGPointValue];
+    fadeIteration++;
+    if(abs(velocity.x / 100 / fadeIteration) < 0.01)
+    {
+        [self stopFading];
+    }
+    else
+    {
+        panDistance.x += velocity.x / 100 / fadeIteration;
+        panDistance.y += velocity.y / 100 / fadeIteration;
+        [self layoutSubviews];
+    }
+}
+
+-(void)stopFading
+{
+    fadeIteration=0;
+    [fadeTimer invalidate];
+
 }
 
 @end
