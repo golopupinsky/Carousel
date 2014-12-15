@@ -25,10 +25,13 @@
         
         [self insertView: [self createView] ];
         [self insertView: [self createView] ];
-//        [self insertView: [self createView] ];
-//        [self insertView: [self createView] ];
-//        [self insertView: [self createView] ];
-//        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
+        [self insertView: [self createView] ];
         
         UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panned:)];
         [self addGestureRecognizer:panRec];
@@ -80,55 +83,57 @@
     CATransform3D transform = CATransform3DIdentity;
     transform.m34 = -2.5 / 1000;
     transform = CATransform3DTranslate(transform,
-                                       /*[self panXtranslation:index] +*/ /*50 * index*/[self initialXtranslation:index],
+                                       [self xTranslation:index],
                                        CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2 ,
-                                       /*[self panZtranslation:index] +*/ /*500 - 50*index)*/ [self initialZtranslation:index]
+                                       [self zTranslation:index]
                                        );
     return transform;
 }
 
--(float)initialXtranslation:(NSUInteger)index
+-(float)xTranslation:(NSUInteger)index
 {
     float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
-    return screenW / 2 + sinf(2*M_PI / [self count] * index + 2*M_PI*panDistance.x/screenW*2) * screenW/2 - SUBVIEW_SIZE/2 + 1 * index;
+    float screenCenter = screenW / 2;
+    float initialPhase = 2 * M_PI / [self count] * index;
+    float panPhase = 2 * M_PI * panDistance.x / screenW * 2;
+    
+    return screenCenter + sinf(initialPhase + panPhase) * screenW/3 - SUBVIEW_SIZE/2;
 }
 
--(float)initialZtranslation:(NSUInteger)index
+-(float)zTranslation:(NSUInteger)index
 {
     float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
-    return sin(2*M_PI / [self count] * index + 2*M_PI*panDistance.x/screenW) * screenW/2;
+    float initialPhase = 2 * M_PI / [self count] * index;
+    float panPhase = 2 * M_PI * panDistance.x / screenW * 2;
+    
+    return cos(initialPhase + panPhase) * screenW/10;
 }
 
--(float)panXtranslation:(NSUInteger)index
-{
-    int screenW = CGRectGetWidth( [UIScreen mainScreen].bounds );
-    return sinf(2*M_PI*panDistance.x/screenW*2) * screenW;
-}
-
--(float)panZtranslation:(NSUInteger)index
-{
-    int screenW = CGRectGetWidth( [UIScreen mainScreen].bounds );
-    return sin(2*M_PI*panDistance.x/screenW) * screenW/5;
-}
 
 -(void)panned:(UIPanGestureRecognizer*)pan
 {
-//    NSLog(@"Panned");
+    static CGPoint panStart;
+    
     if(pan.state == UIGestureRecognizerStateBegan)
     {
-        
+        panStart = [pan locationInView:self];
     }
     
     if(pan.state == UIGestureRecognizerStateChanged)
     {
         [self layoutSubviews];
-        panDistance = [pan translationInView:self];//CGPointMake(panDistance.x + [pan translationInView:self].x, panDistance.y + [pan translationInView:self].y);
-        NSLog(@"%f %f", panDistance.x, panDistance.y);
+        CGPoint newDelta = CGPointMake([pan locationInView:self].x - panStart.x, [pan locationInView:self].y - panStart.y);
+        panDistance = newDelta;//CGPointMake(panDistance.x + newDelta.x, panDistance.y + newDelta.y);
+        /*[pan translationInView:self]*/
+        //CGPointMake(panDistance.x + [pan translationInView:self].x, panDistance.y + [pan translationInView:self].y);
+//        NSLog(@"%f %f", panDistance.x, panDistance.y);
         [self layoutSubviews];
     }
     
     if(pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled)
     {
+        CGPoint velocity = [pan velocityInView:self];
+        NSLog(@"%f",velocity.x);
         
     }
 }
