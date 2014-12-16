@@ -142,7 +142,8 @@
 {
     CGPoint velocity = [fadeTimer.userInfo CGPointValue];
     fadeIteration++;
-    if(abs(velocity.x / 100 / fadeIteration) < 0.01)
+    
+    if(abs(velocity.x) / 20 < fadeIteration )
     {
         [self stopFading];
     }
