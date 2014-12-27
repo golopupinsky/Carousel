@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "Carousel.h"
 
 @interface ViewController ()
 

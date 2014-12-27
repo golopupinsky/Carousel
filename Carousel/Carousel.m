@@ -69,6 +69,7 @@
 
 -(void)layoutSubviews
 {
+    [super layoutSubviews];
     for ( int i=0; i<subviews.count; i++) {
         UIView* view = subviews[i];
         view.layer.transform = [self transformForViewAtIndex:i];;
@@ -83,10 +84,11 @@
 -(CATransform3D)transformForViewAtIndex:(NSUInteger)index
 {
     CATransform3D transform = CATransform3DIdentity;
-    transform.m34 = -2.5 / 1000;
+    transform.m34 = -1.0 / 1000;
+    float yTranslation = CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2;
     transform = CATransform3DTranslate(transform,
                                        [self xTranslation:index],
-                                       CGRectGetHeight([UIScreen mainScreen].bounds)/2 - SUBVIEW_SIZE/2,
+                                       yTranslation,
                                        [self zTranslation:index]
                                        );
     return transform;
@@ -108,7 +110,7 @@
     float initialPhase = 2 * M_PI / [self count] * index;
     float panPhase = 2 * M_PI * panDistance.x / screenW * 2;
     
-    return cos(initialPhase + panPhase) * screenW/10;
+    return cosf(initialPhase + panPhase) * screenW/10;
 }
 
 
@@ -125,7 +127,8 @@
     
     if(pan.state == UIGestureRecognizerStateChanged)
     {
-        panDistance = CGPointMake(panStart.x + [pan translationInView:self].x, panStart.y + [pan translationInView:self].y);
+        CGPoint translation = [pan translationInView:self];
+        panDistance = CGPointMake(panStart.x + translation.x, panStart.y + translation.y);
         [self layoutSubviews];
     }
     

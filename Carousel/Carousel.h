@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CarouselDatasource <NSObject>
--(UIView*)viewAtIndex:(NSUInteger)index;
--(NSUInteger)numberOfItems;
-@end
-
-
 @interface Carousel : UIView
-@property (weak) id<CarouselDatasource> dataSource;
+
 @end
