@@ -7,14 +7,19 @@
 //
 
 #import "Carousel.h"
+#import <pop/POP.h>
+
 #define SUBVIEW_SIZE   100
+#define DECELERATE_ANIMATION_KEY @"decelerate"
+
+@interface Carousel ()
+@property (nonatomic)  CGPoint panDistance;
+@end
 
 @implementation Carousel
 {
     NSMutableArray *subviews;
-    CGPoint panDistance;
-    NSTimer *fadeTimer;
-    NSUInteger fadeIteration;
+    POPAnimatableProperty *animatablePanDistance;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -37,6 +42,18 @@
         
         UIPanGestureRecognizer *panRec = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panned:)];
         [self addGestureRecognizer:panRec];
+        
+        animatablePanDistance =
+        [POPAnimatableProperty propertyWithName:@"panDistance" initializer:^(POPMutableAnimatableProperty *prop) {
+            prop.readBlock = ^(Carousel *obj, CGFloat values[]) {
+                values[0] = [obj panDistance].x;
+                values[1] = [obj panDistance].y;
+            };
+            prop.writeBlock = ^(id obj, const CGFloat values[]) {
+                [obj setPanDistance:CGPointMake(values[0],values[1])];
+            };
+        }];
+
     }
     
     return self;
@@ -99,7 +116,7 @@
     float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
     float screenCenter = screenW / 2;
     float initialPhase = 2 * M_PI / [self count] * index;
-    float panPhase = 2 * M_PI * panDistance.x / screenW * 2;
+    float panPhase = 2 * M_PI * self.panDistance.x / screenW * 2;
     
     return screenCenter + sinf(initialPhase + panPhase) * screenW/3 - SUBVIEW_SIZE/2;
 }
@@ -108,11 +125,15 @@
 {
     float screenW = CGRectGetWidth([UIScreen mainScreen].bounds);
     float initialPhase = 2 * M_PI / [self count] * index;
-    float panPhase = 2 * M_PI * panDistance.x / screenW * 2;
+    float panPhase = 2 * M_PI * self.panDistance.x / screenW * 2;
     
     return cosf(initialPhase + panPhase) * screenW/10;
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self stopFading];
+}
 
 -(void)panned:(UIPanGestureRecognizer*)pan
 {
@@ -120,49 +141,35 @@
     
     if(pan.state == UIGestureRecognizerStateBegan)
     {
-        [self stopFading];
-        
-        panStart = panDistance;
+        panStart = self.panDistance;
     }
     
     if(pan.state == UIGestureRecognizerStateChanged)
     {
         CGPoint translation = [pan translationInView:self];
-        panDistance = CGPointMake(panStart.x + translation.x, panStart.y + translation.y);
-        [self layoutSubviews];
+        self.panDistance = CGPointMake(panStart.x + translation.x, panStart.y + translation.y);
     }
     
     if(pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled)
     {
         CGPoint velocity = [pan velocityInView:self];
         
-        fadeTimer = [NSTimer timerWithTimeInterval:0.05 target:self selector:@selector(panFade) userInfo:[NSValue valueWithCGPoint:velocity] repeats:YES];
-        [[NSRunLoop mainRunLoop]addTimer:fadeTimer forMode:NSRunLoopCommonModes];
+        POPDecayAnimation *decayAnimation = [POPDecayAnimation animation];
+        decayAnimation.property = animatablePanDistance;
+        decayAnimation.velocity = [NSValue valueWithCGRect:CGRectMake(velocity.x, velocity.y, 0, 0)];
+        [self pop_addAnimation:decayAnimation forKey:DECELERATE_ANIMATION_KEY];
     }
 }
 
--(void)panFade
+-(void)setPanDistance:(CGPoint)panDistance
 {
-    CGPoint velocity = [fadeTimer.userInfo CGPointValue];
-    fadeIteration++;
-    
-    if(abs(velocity.x) / 20 < fadeIteration )
-    {
-        [self stopFading];
-    }
-    else
-    {
-        panDistance.x += velocity.x / 100 / fadeIteration;
-        panDistance.y += velocity.y / 100 / fadeIteration;
-        [self layoutSubviews];
-    }
+    _panDistance = panDistance;
+    [self layoutSubviews];
 }
 
 -(void)stopFading
 {
-    fadeIteration=0;
-    [fadeTimer invalidate];
-
+    [self pop_removeAnimationForKey:DECELERATE_ANIMATION_KEY];
 }
 
 @end
